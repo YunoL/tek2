@@ -1,0 +1,6 @@
+== README ==
+
+~ BONUS FAITS ~
+-> Garbage collector dans tous les exos (Aucun Memory Leak à cause des str)
+-> Makefile pour chaque exercice
+-> Ex6 : listes doublement chainées + implémentation foreach

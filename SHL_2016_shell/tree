@@ -1,0 +1,27 @@
+#!/bin/bash
+
+checkArgs () {
+    if [ -z "$1" ]; then
+  echo "USAGE: $0 DirName">&2
+  exit 1
+  fi
+}
+
+checkDir () {
+  directory="$1"
+  if [ -d "$directory" ]
+    then
+    dispTree "$directory"
+  else
+    echo "ERROR: $directory is not a directory">&2
+    exit 1
+  fi
+}
+
+dispTree () {
+find ./ -print | sed -e 's;[^/]*/; /;g;s;/ ;|   ;g;s;^ /$;.;;s; /; |--> ;g'
+  exit 0
+}
+
+checkArgs "$1"
+checkDir "$1"

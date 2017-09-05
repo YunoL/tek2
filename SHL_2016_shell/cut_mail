@@ -1,0 +1,39 @@
+#!/bin/sh
+
+checkArgs () {
+    if [ -z "$1" ]; then
+	echo "USAGE: $0 mbox destdir">&2
+	exit 1
+	fi
+}
+
+checkFiles () {
+  file="$1"
+  destdir="$2"
+  if [ -f "$file" ]
+    then
+    cutMail "$file" "$destdir"    
+  else
+    echo "Error">&2
+    exit 1
+  fi
+}
+
+cutMail () {
+  nb_mail=0
+  if [ ! -d "$2" ]
+    then
+    mkdir "$2"
+  fi
+  cat "$1">>email
+  tmp="./email"
+  if [[ -s "$tmp" ]]; then
+    echo "file has data"
+  else
+    echo "$nb_mail" "mail found"
+  fi
+  rm email
+}
+
+checkArgs "$1"
+checkFiles "$1" "$2"

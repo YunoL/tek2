@@ -1,0 +1,1 @@
+--> moyennes mobiles + mix avec mlcd

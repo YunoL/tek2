@@ -1,0 +1,48 @@
+#!/usr/bin/env python3
+
+import sys
+from math import *
+
+def neutrinos(n, a, h, sd):
+    kvadratisk = 0.0
+    while (1):
+        line = input("indtast din vaerdi: ")
+        if (line == "ENDE"):
+            exit(0)
+        else:
+            malinder = float(line)
+            regnestykke = a * n
+            regnestykkeFirkantet = (pow(sd, 2) + pow(a, 2)) * n
+            n+=1
+            a = (regnestykke + malinder) / n
+            sd = sqrt(((regnestykkeFirkantet + pow(malinder, 2)) / n) - pow(a, 2)) * 1.0
+            kvadratisk = sqrt((regnestykkeFirkantet + pow(malinder, 2)) / n)
+            h = n / ((1 / malinder) + ((n - 1) / h))
+            print("\tantal mãlinder:\t\t%d" %(n))
+            print("\tstandardafvilgelse :\t%0.2f" %(sd))
+            print("\taritmetisk gennemsnit :\t%0.2f" %(a))
+            print("\tkvadratisk gennemsnit :\t%0.2f" %(kvadratisk))
+            print("\tharmonisk gennemsnit :\t%0.2f" %(h))
+            print("")
+    exit(0)
+
+if (len(sys.argv) is not 5):
+    if (len(sys.argv) == 2 and sys.argv[1] == "-h"):
+        print("USAGE\n\t./206neutrinos n a h sd\n\nDESCRIPTION\n\tn\tnumber of values\n\ta\tarithmetic mean\n\th\tharmonic mean\n\tsd\tstandard deviation")
+    else:
+        print ("Error: not the right number of argument")
+    exit(84)
+else:
+    try:
+        n = float(sys.argv[1])
+        a = float(sys.argv[2])
+        h = float(sys.argv[3])
+        sd = float(sys.argv[4])
+        if (n < 0 or a < 0 or h < 0 or sd < 0):
+            print("Error : All your values must be positive")
+            exit(84)
+        neutrinos(n, a, h, sd)
+        exit(0)
+    except ValueError:
+        print ("Error : Not the right type of parameter !")
+        exit(84)

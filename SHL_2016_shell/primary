@@ -1,0 +1,52 @@
+#!/bin/sh
+
+checkArgs () {
+    if [ -z "$1" ]; then
+      echo "USAGE: $0 n
+Display n first primary number">&2
+  exit 1
+  fi
+}
+
+checkNum () {
+  if [[ "${1}" =~ ^[]?[0-9]+$ ]]; then
+    if [[ "$1" == 0 ]]; then
+      exit 0
+    fi
+    calcPrime "$1"
+    exit 0
+  else
+    echo "ERROR">&2
+    exit 1
+  fi
+}
+
+calcPrime () {
+a=2
+l=0
+while ((l<$1))
+do
+  if ((b[a]))
+    then
+    ((c=b[a]))
+  else
+    ((c=a,l++))
+    if ((l==1))
+      then
+      echo -n "$a"
+    else 
+      echo -n " $a"
+    fi
+  fi
+  ((d=a+c))
+  while ((b[d]))
+  do
+    ((d+=c))
+  done
+  ((b[d]=c,a++))
+done
+echo
+}
+
+checkArgs "$1"
+checkNum "$1"

@@ -1,0 +1,12 @@
+RESULTATS :
+mouli_channel_join : OK!
+mouli_channel_join_propagation : KO! (3 sur 6)
+mouli_channel_leave : OK!
+mouli_channel_leave_propagation : KO! (2 sur 5)
+mouli_channel_multiplejoin : OK!
+mouli_connect : OK!
+mouli_message_private : KO!
+mouli_message_propagation : KO!
+mouli_multipleconnect : OK!
+mouli_nickname : KO!
+mouli_nickname_propagation : KO!

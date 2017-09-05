@@ -1,0 +1,25 @@
+#!/bin/sh
+
+checkArgs () {
+    if [ -z "$1" ]; then
+  echo "USAGE: $0 -l -u
+-l : lowcase
+-u : upcase">&2
+  exit 1
+  fi
+}
+
+execProg () {
+  if [ "$1" = "-u" ]; then
+    #tr '[a-z]' '[A-Z]'<$2
+    exit 0
+  elif [ "$1" = "-l" ]; then
+    #tr '[A-Z]' '[a-z]'<$2
+    exit 0
+  fi
+  echo "ERROR: $1 unknown option">&2
+  exit 1
+}
+
+checkArgs "$1"
+execProg "$1"

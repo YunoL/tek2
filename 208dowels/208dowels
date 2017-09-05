@@ -1,0 +1,113 @@
+#!/usr/bin/env python3
+
+import sys
+from math import *
+
+data = [[0, [99, 90, 80, 70, 60, 50, 40, 30, 20, 10, 5, 3, 1]],
+[1, [0.00, 0.02, 0.06, 0.15, 0.27, 0.45, 0.71, 1.07, 1.64, 2.71, 3.84, 5.41, 6.63]],
+[2, [0.02, 0.21, 0.45, 0.71, 1.02, 1.39, 1.83, 2.41, 3.22, 4.61, 5.99, 7.82, 9.21]],
+[3, [0.11, 0.58, 1.01, 1.42, 1.87, 2.37, 2.95, 3.66, 4.64, 6.25, 7.81, 9.84, 11.34]],
+[4, [0.30, 1.06, 1.65, 2.19, 2.75, 3.36, 4.04, 4.88, 5.99, 7.78, 9.49, 9.84, 11.34]],
+[5, [0.55, 1.61, 2.34, 3.00, 3.66, 4.35, 5.13, 6.06, 7.29, 9.24, 11.07, 11.67, 13.28]],
+[6, [0.7, 2.20, 3.07, 3.83, 4.57, 5.35, 6.21, 7.23, 8.56, 10.64, 12.59, 15.03, 16.81]],
+[7, [1.24, 2.83, 3.82, 4.67, 5.49, 6.35, 7.28, 8.38, 9.80, 12.02, 14.07, 16.62, 18.48]],
+[8, [1.65, 3.49, 4.59, 5.53, 6.42, 7.34, 8.35, 9.52, 11.03, 13.36, 15.51, 18.17, 20.09]],
+[9, [2.09, 4.17, 5.38, 6.39, 7.63, 8.34, 9.41, 10.66, 12.24, 14.68, 16.92, 19.68, 21.67]],
+[10, [2.56, 4.87, 6.18, 7.27, 8.30, 9.34, 10.47, 11.78, 13.44, 15.99, 18.31, 21.16, 23.21]]]
+
+param = list()
+param2 = list()
+res_Ox = list()
+res_Tx = list()
+col_name = list()
+
+def coef_bino(x, y):
+    if (x == y):
+        return (1)
+    elif (y == 1):
+        return (x)
+    elif (y > x):
+        return (0)
+    else:
+        a = factorial(x)
+        b = factorial(y)
+        c = factorial(x - y)
+        div = a // (b * c)
+        return (div)
+
+def bino_law(p):
+    n = 100.0
+    k = 0.0
+    tmp = 0.0
+    while (k <= 50):
+        tmp = coef_bino(n, k)
+        tmp = tmp * pow(p, k) * pow((1 - p), (n - k))
+        param2.append(tmp)
+        k+=1
+
+def calc_p():
+    p = 0.0
+    i = 0
+    while (i < 9):
+        p+=i * param[i] * 1.0
+        i+=1
+    p = p / 10000 * 1.0
+    return(p)
+
+def aff_value():
+    i = 0
+    print("x\t|0-1\t|2\t|3\t|4\t|5\t|6\t|7+\t|total")
+    print("Ox\t|%d\t|%d\t|%d\t|%d\t|%d\t|%d\t|%d\t|100" %(i, i, i, i, i, i, i))
+    print("Tx\t|%0.1f\t|%0.1f\t|%0.1f\t|%0.1f\t|%0.1f\t|%0.1f\t|%d\t|100" %(i, i, i, i, i, i, i))
+
+def sum_square():
+    squareSum = 0.0
+    return(squareSum)
+
+def verif_val():
+    return(8)
+
+def main_loop():
+    p = calc_p()
+    bino_law(p)
+    aff_value()
+    deg_lib = verif_val()
+    squareSum = sum_square()
+    print("distribution:\t\t\tB(100, %0.3f)" %(p))
+    print("sum of the square differences:\t%0.3f" %(squareSum))
+    print("freedom degrees:\t\t%d" %(deg_lib))
+    print("fit validity:\t\t\t%d%%<P<%d%%" %(0, 100))
+
+def calc_sum():
+    val_sum = 0
+    i = 0
+    while (i < len(param)):
+        val_sum+=param[i]
+        i+=1
+    return (val_sum)
+
+if (len(sys.argv) is not 10):
+    if (len(sys.argv) == 2 and sys.argv[1] == "-h"):
+        print("USAGE\n\t./208dowels O0 O1 O2 O3 O4 O5 O6 O7 O8+\n\nDESCRIPTION\n\tOi\tsize of the observed class")
+    else:
+        print ("Error: not the right number of argument")
+    exit(84)
+else:
+    try:
+        i = 1
+        value = 0
+        while (i < len(sys.argv)):
+            value = int(sys.argv[i])
+            if (value < 0):
+                print("Error : Each value must be a positive number !")
+                exit(84)
+            param.append(int(sys.argv[i]))
+            i+=1
+        if (calc_sum() != 100):
+            print("Error : The sum must be equal to 100 !")
+            exit(84)
+        main_loop()
+        exit(0)
+    except ValueError:
+        print ("Error : Not the right type of parameter !")
+        exit(84)

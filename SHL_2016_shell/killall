@@ -1,0 +1,22 @@
+#!/bin/sh
+
+checkArgs () {
+    if [ -z "$1" ]; then
+      echo "USAGE: $0 option">&2
+      echo "option: -user user1 ... : Kill all processes for user1, ...
+        -pid pid1 ... : Kill a process with pid pid1, ...
+        -prog prog1 ... : Kill all processes whose program's name is prog1, ...
+        -all : Kill all processes">&2
+        exit 1
+      fi
+}
+
+checkFlags () {
+  if [[ "$1" != -user* ]] && [[ "$1" != -pid* ]] && [[ "$1" != -prog* ]] && [[ "$1" != -all* ]]; then
+    echo "Error">&2
+    exit 1
+  fi
+}
+
+checkArgs "$1"
+checkFlags "$1"

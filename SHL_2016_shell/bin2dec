@@ -1,0 +1,38 @@
+#!/bin/sh
+
+checkArgs () {
+    if [ -z "$1" ]; then
+	echo "USAGE: $0 BinNumber
+Convert binary number to decimal number">&2
+	exit 1
+	fi
+}
+
+checkValue () {
+  val="$1"
+  if ((val<0))
+    then
+    val=$((val*-1))
+    if [[ "${1}" =~ ^[-]?[0-1]+$ ]]; then
+      echo bin2dec\("$1"\)=-$((2#"$val"))
+      exit 0
+    else
+      echo "Error">&2
+      exit 1
+    fi
+  fi
+  checkNum "$val"
+}
+
+checkNum () {
+  if [[ "${1}" =~ ^[-]?[0-1]+$ ]]; then
+    echo bin2dec\("$1"\)=$((2#"$1"))
+    exit 0
+  else
+    echo "Error">&2
+    exit 1
+  fi
+}
+
+checkArgs "$1"
+checkValue "$1"

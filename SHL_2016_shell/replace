@@ -1,0 +1,31 @@
+#!/bin/sh
+
+checkArgs () {
+    if [ -z "$1" ]; then
+  echo "USAGE: $0 original_stringfile replace_stringfile file">&2
+  echo "Replace in file each string of original_stringfile by replace_stringfile">&2
+  exit 1
+  fi
+}
+
+checkFiles () {
+  original_str="$1"
+  replace_str="$2"
+  file="$3"
+  if [ -f "$original_str" ] && [ -f "$replace_str" ] && [ -f "$file" ]
+    then
+    repFiles "$original_str" "$replace_str" "$file"
+  else
+    echo "Error">&2
+    exit 1
+  fi
+}
+
+repFiles () {
+  echo "$1"
+  echo "$2"
+  echo "$3"
+}
+
+checkArgs "$1"
+checkFiles "$1" "$2" "$3"

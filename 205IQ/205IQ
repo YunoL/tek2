@@ -1,0 +1,84 @@
+#!/usr/bin/env python3
+
+import sys
+from math import *
+
+res_tab = list()
+
+def density_iq(u, o):
+    result = 0.0
+    i = 0
+    while (i <= 200):
+        result = (1 / (float(o) * sqrt(2 * pi))) * exp(-0.5 * pow((float(i) - float(u)) / float(o), 2))
+        res_tab.append(result * 100)
+        i+=1
+
+def testing(u, o, i):
+    result = (1 / (float(o) * sqrt(2 * pi))) * exp(-0.5 * pow((float(i) - float(u)) / float(o), 2))
+    return (result)
+
+def check_iq(iq):
+    if (iq < 0 or iq > 200):
+        print("Error : IQ must be between between 0 and 200")
+        exit(84)
+
+def inferior_iq(u, o, iq1):
+    check_iq(iq1)
+    i = 0.0
+    n = 0.0
+    while (i < iq1):
+        n += testing(u, o, i)
+        i+=0.01
+    print("%0.1f%% of people have a IQ inferior to %d" %(n, iq1))
+    exit(0)
+
+def between_iq(u, o, iq1, iq2):
+    check_iq(iq1)
+    check_iq(iq2)
+    if (iq1 > iq2):
+        print("Error : IQ1 must be inferior to IQ2")
+        exit(84)
+    i = iq1 * 1.0
+    n = 0.0
+    while (i < iq2):
+        n += testing(u, o, i)
+        i+=0.01
+    print("%0.1f%% of people have a IQ between %d and %d" %(n, iq1, iq2))
+    exit(0)
+
+def print_tab():
+    i = 0
+    while (i <= 200):
+        if (res_tab[i] < 0):
+            exit(84)
+        print("%d %0.2f" %(i, res_tab[i]))
+        i+=1
+
+if (len(sys.argv) < 3 or len(sys.argv) > 5):
+    if (len(sys.argv) == 2 and sys.argv[1] == "-h"):
+        print("USAGE\n\t./205IQ µ p [IQ1] [IQ2]\n\nDESCRIPTION\n\tµ\tpredetermined mean\n\tp\tpredetermined standard deviation\n\tIQ1\tminimum IQ\n\tIQ2\tmaximum IQ")
+    else:
+        print ("Error: not the right number of argument")
+    exit(84)
+else:
+    try:
+        u = int(sys.argv[1])
+        p = int(sys.argv[2])
+        res_tab = []
+        if (u < 0 or p <= 0):
+            print ("Error : µ and p must be positive")
+            exit(84)
+        density_iq(u, p)
+        if (len(sys.argv) == 3):
+            print_tab()
+        elif (len(sys.argv) == 4):
+            iq1 = int(sys.argv[3])
+            inferior_iq(u, p, iq1)
+        elif (len(sys.argv) == 5):
+            iq1 = int(sys.argv[3])
+            iq2 = int(sys.argv[4])
+            between_iq(u, p, iq1, iq2)
+        exit(0)
+    except ValueError:
+        print ("Error : Not the right type of parameter !")
+        exit(84)

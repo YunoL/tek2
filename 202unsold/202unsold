@@ -1,0 +1,120 @@
+#!/usr/bin/env python3
+
+import sys
+from math import *
+
+everything = list()
+expX = list()
+expY = list()
+
+def Calc_tab(a, b):
+    print("\tX=10\tX=20\tX=30\tX=40\tX=50\tY law")
+    y = 10
+    val = 0.0
+    marg = 0.0
+    test = 0
+    while (y <= 60):
+        x = 10
+        if (y == 60):
+            print("X law", end='')
+        else:
+            print("Y=%d" %(y), end='')
+        while (x <= 50):
+            val = ((a - x) * (b - y)) / ((5 * a - 150) * (5 * b - 150))
+            marg += val
+            if (y == 60):
+                var_y = 0
+                total = 0.0
+                i = test
+                while (var_y < 5):
+                    total += everything[i]
+                    var_y += 1
+                    i += 5
+                print("\t%0.3f" %(total), end='')
+                test += 1
+                expX.append(total)
+            else:
+                everything.append(val)
+                print("\t%0.3f" %(val), end='')
+            x += 10
+        if (y == 60):
+            print("\t1")
+        else:
+            print("\t%0.3f" %(marg))
+            expY.append(marg)
+            marg = 0.0
+        y += 10
+
+def Calc_ztab(a, b):
+    z = 20
+    total = 0.0
+    print("z\t20\t30\t40\t50\t60\t70\t80\t90\t100\ttotal\np(Z=z)", end='')
+    while (z <= 100):
+        y = 10
+        val = 0.0
+        summ = 0.0
+        while (y <= 60):
+            x = 10
+            while (x <= 50):
+                val = ((a - x) * (b - y)) / ((5 * a - 150) * (5 * b - 150))
+                if ((x + y) == z and y < 60):
+                    summ += val
+                x += 10
+            y += 10
+        print("\t%0.3f" %(summ), end='')
+        total += summ
+        z += 10
+    print("\t1")
+
+def Calc_rest(a, b):
+    x = 10
+    y = 10
+    i = 0
+    total = 0.0
+    total2 = 0.0
+    while (x <= 50):
+        total += expX[i] * x
+        total2 += expY[i] * x
+        i += 1
+        x += 10
+    i = 0
+    varX = 0.0
+    varY = 0.0
+    while (i < 5):
+        varX += ((i + 1) * 10 - total) * ((i + 1) * 10 - total) * expX[i]
+        varY += ((i + 1) * 10 - total2) * ((i + 1) * 10 - total2) * expY[i]
+        i += 1
+    print("expected value of X:\t%0.1f" %(total))
+    print("variance of X:\t\t%0.1f" %(varX))
+    print("expected value of Y:\t%0.1f" %(total2))
+    print("variance of Y:\t\t%0.1f" %(varY))
+    print("expected value of Z:\t%0.1f" %(total + total2))
+    print("variance of Z:\t\t%0.1f" %(varX + varY))
+
+def unsold(a, b):
+    print("----------------------------------------")
+    Calc_tab(a, b)
+    print("----------------------------------------")
+    Calc_ztab(a, b)
+    print("----------------------------------------")
+    Calc_rest(a, b)
+    print("----------------------------------------")
+    exit(0)
+
+if (len(sys.argv) != 3):
+    if (len(sys.argv) == 2 and sys.argv[1] == "-h"):
+        print("USAGE\n\t./202unsold a b\n\nDESCRIPTION\n\ta\tconstant computed from the past results\n\tb\tconstant computed from the past results")
+    else:
+        print ("Error: not the right number of argument")
+    exit(84)
+else:
+    try:
+        a = int(sys.argv[1])
+        b = int(sys.argv[2])
+        if (a <= 50 or b <= 50):
+            print("Error : your values must be greater than 50 !")
+            exit(84)
+        unsold(a, b)
+    except ValueError:
+        print ("Error : Not the right type of parameter !")
+        exit(84)

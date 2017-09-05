@@ -1,0 +1,31 @@
+val a : int = 42
+- : int = 42
+val b : string = "suspens..."
+val c : unit = ()
+val d : int = 42
+val e : float = 42.
+val f : int = 30
+val g : int = 12
+val h : int = 42
+val i : int = 42
+- : int = 42
+Error: Unbound value n
+val fonction_p : int -> int -> int = <fun>
+val fonction_q : int -> int -> int = <fun>
+- : int = 42
+- : int -> int -> int = <fun>
+val fonction_r : unit -> int = <fun>
+val fonction_s : 'a -> int = <fun>
+val fonction_t : 'a -> 'a = <fun>
+val fonction_u : ('a -> 'b) -> 'a -> 'b = <fun>
+val fonction_v : ('a -> 'b -> 'c) -> 'a -> 'b -> 'c = <fun>
+val fonction_w : ('a -> 'b) -> ('c -> 'a) -> 'c -> 'b = <fun>
+val fonction_x : unit -> int = <fun>
+- : 'a -> string -> string = <fun>
+Error: Unbound value fonction_z
+- : bool = true
+- : unit = ()
+- : int -> int -> int = <fun>
+- : string = "42"
+val f : int -> int = <fun>
+val g : int -> int = <fun>
